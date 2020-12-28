@@ -1,2 +1,19 @@
 
-# NOSTR client config
+# This is a 96-byte array containing your
+# private and public key. Keep this data secret or
+# other people can impersonate you!
+keypair = "some-base64-string"
+
+# A list of public keys which you follow
+following_pubkeys_bytes = [
+  
+]
+
+# A list of relays which are queried for posts by those you follow
+relays = [
+  "https://nostr-relay.bigsun.xyz",
+  "https://nostr.coinos.io"
+]
+
+
+
