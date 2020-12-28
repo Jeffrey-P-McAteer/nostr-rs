@@ -16,20 +16,19 @@ cargo build --release
 
 
 ```bash
-./target/release/relay &
-./target/release/client
+./target/release/nostr-r &
+./target/release/nostr-c
 ```
 
 # Config
 
 The client is configured by a `nostr.toml` file
-located at TODO.
+located at `$HOME/.config/nostr/client.toml`.
 
-An example is below:
+An example is [`src/client.toml`](src/client.toml)
 
-```
-TODO
+The relay is configured by a `nostr.toml` file
+located at `$HOME/.config/nostr/relay.toml`.
 
-```
-
+An example is [`src/relay.toml`](src/relay.toml)
 
