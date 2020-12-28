@@ -1,0 +1,26 @@
+[package]
+name = "nostr-rs"
+version = "0.1.0"
+authors = ["Jeffrey McAteer <jeffrey.p.mcateer@gmail.com>"]
+edition = "2018"
+
+[[bin]]
+name = "nostr-c"
+path = "src/client.rs"
+
+[[bin]]
+name = "nostr-r"
+path = "src/relay.rs"
+
+[dependencies]
+
+schnorrkel = {version = "0.9.1", features = ["serde"] }
+
+dirs-next = "2.0.0"
+
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.5.8"
+serde_json = "1.0"
+
+
+
