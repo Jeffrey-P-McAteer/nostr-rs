@@ -58,11 +58,31 @@ fn publickeys_from_base64<'de, D>(deserializer: D) -> Result<Vec<schnorrkel::key
   let mut pubkeys = vec![];
   let str_base64: Vec<String> = Deserialize::deserialize(deserializer)?;
   for s in str_base64 {
+    // assume base64 encoding first
     if let Ok(bytes) = base64::decode(&s[..]) {
       if let Ok(pubkey) = schnorrkel::keys::PublicKey::from_bytes(&bytes[..]) {
         pubkeys.push(pubkey);
+        continue;
       }
     }
+    
+    // Try hex
+    if let Ok(bytes) = hex::decode(&s[..]) {
+      
+      // TODO debug why the public keys from nostr-client.netlify.app do not parse:
+      // https://github.com/w3f/schnorrkel/blob/8fa2ad3e9fbf0b652c724df6a87a4b3c5500f759/src/points.rs#L93
+      // https://docs.rs/curve25519-dalek/2.0.0/src/curve25519_dalek/ristretto.rs.html#212
+      println!("res={:?}", schnorrkel::keys::PublicKey::from_bytes(&bytes[..]));
+
+      if let Ok(pubkey) = schnorrkel::keys::PublicKey::from_bytes(&bytes[..]) {
+        pubkeys.push(pubkey);
+        continue;
+      }
+    }
+
+    eprintln!("Unknown public key encoding for {}", &s);
+
+
   }
   Ok(pubkeys)
 }

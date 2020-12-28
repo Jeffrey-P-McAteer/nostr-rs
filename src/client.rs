@@ -102,10 +102,19 @@ fn main_with_data(mut config: lib::ClientConfig) {
 }
 
 fn get_updates(config: &lib::ClientConfig) {
-
-  println!("TODO");
-
+  for relay in &config.relays {
+    if let Err(e) = get_updates_single(config, &relay[..]) {
+      println!("{}:{}: {}", std::file!(), std::line!(), e);
+    }
+  }
 }
+
+fn get_updates_single(config: &lib::ClientConfig, relay_host: &str) -> Result<(), Box<dyn std::error::Error> > {
+  let event_source = sse_client::EventSource::new(format!("{}/listen_events?session=", relay_host).as_str())?;
+
+  Ok(())
+}
+
 
 fn publish(config: &lib::ClientConfig, msg: Option<&String>) {
   let mut buffer = String::new();
